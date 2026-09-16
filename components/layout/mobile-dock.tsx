@@ -1,20 +1,19 @@
 "use client"
 
-import * as React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { NAV_URLS } from "@/lib/data/nav-urls"
 import { cn } from "@/lib/utils"
 import { Search, X } from "lucide-react"
+import { useEffect, useRef, useState } from "react"
 
 export default function MobileDock() {
   const pathname = usePathname()
-  const [isSearchOpen, setIsSearchOpen] = React.useState(false)
-  const [searchQuery, setSearchQuery] = React.useState("")
-  const searchInputRef = React.useRef<HTMLInputElement>(null)
+  const [isSearchOpen, setIsSearchOpen] = useState(false)
+  const [searchQuery, setSearchQuery] = useState("")
+  const searchInputRef = useRef<HTMLInputElement>(null)
 
-  // Auto-focus input when search opens
-  React.useEffect(() => {
+  useEffect(() => {
     if (isSearchOpen) {
       const timer = setTimeout(() => {
         searchInputRef.current?.focus()
@@ -23,8 +22,7 @@ export default function MobileDock() {
     }
   }, [isSearchOpen])
 
-  // Close search on Escape key
-  React.useEffect(() => {
+  useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape" && isSearchOpen) {
         setIsSearchOpen(false)
@@ -34,20 +32,17 @@ export default function MobileDock() {
     return () => window.removeEventListener("keydown", handleKeyDown)
   }, [isSearchOpen])
 
-  // Close search when route changes
-  React.useEffect(() => {
+  useEffect(() => {
     setIsSearchOpen(false)
   }, [pathname])
 
   return (
     <>
-      {/* Apple-inspired Floating Mobile Dock */}
       <nav
         aria-label="Mobile Navigation Dock"
-        className="fixed bottom-4 inset-x-0 z-50 mx-auto flex w-fit max-w-[calc(100vw-2rem)] items-center justify-center md:hidden pointer-events-none"
+        className="pointer-events-none fixed inset-x-0 bottom-3 z-50 mx-auto flex w-full max-w-md items-center justify-center px-3 sm:bottom-4 sm:px-4 md:hidden"
       >
-        <div className="pointer-events-auto flex items-center gap-1 sm:gap-1.5 rounded-full p-2 bg-background/80 dark:bg-neutral-900/80 backdrop-blur-2xl border border-white/20 dark:border-white/10 shadow-[0_12px_40px_rgba(0,0,0,0.18),inset_0_1px_1px_rgba(255,255,255,0.6)] dark:shadow-[0_16px_48px_rgba(0,0,0,0.7),inset_0_1px_0_rgba(255,255,255,0.12)]">
-          {/* 4 Navigation Items */}
+        <div className="pointer-events-auto flex w-full items-center justify-between gap-1 rounded-2xl border border-white/20 bg-background/85 p-1.5 shadow-[0_12px_40px_rgba(0,0,0,0.18),inset_0_1px_1px_rgba(255,255,255,0.6)] backdrop-blur-2xl sm:p-2 dark:border-white/10 dark:bg-neutral-900/85 dark:shadow-[0_16px_48px_rgba(0,0,0,0.7),inset_0_1px_0_rgba(255,255,255,0.12)]">
           {NAV_URLS.map((item) => {
             const Icon = item.icon
             const isActive = pathname === item.href
@@ -59,34 +54,33 @@ export default function MobileDock() {
                 title={item.name}
                 aria-label={item.name}
                 className={cn(
-                  "group relative flex size-11 items-center justify-center rounded-full transition-all duration-200 active:scale-90",
+                  "group relative flex min-w-0 flex-1 flex-col items-center justify-center rounded-xl px-1 py-1.5 transition-all duration-200 active:scale-95",
                   isActive
-                    ? "bg-primary/10 text-primary dark:bg-white/15 dark:text-white font-medium shadow-xs"
-                    : "text-muted-foreground hover:text-foreground hover:bg-black/5 dark:hover:bg-white/10 active:bg-black/10"
+                    ? "bg-primary/10 font-semibold text-primary shadow-xs dark:bg-white/15 dark:text-white"
+                    : "text-muted-foreground hover:bg-black/5 hover:text-foreground active:bg-black/10 dark:hover:bg-white/10"
                 )}
               >
-                <Icon className="size-5 transition-transform duration-200 group-hover:scale-110" />
+                <Icon className="mb-0.5 size-5 shrink-0 transition-transform duration-200 group-hover:scale-105" />
 
-                {/* macOS / iOS Dock Active Dot Indicator */}
+                <span className="max-w-full truncate text-[10px] leading-tight font-medium tracking-tight sm:text-[11px]">
+                  {item.name}
+                </span>
+
                 {isActive && (
                   <span
-                    className="absolute bottom-1 size-1 rounded-full bg-primary dark:bg-white shadow-[0_0_6px_currentColor]"
+                    className="absolute bottom-0.5 size-1 rounded-full bg-primary shadow-[0_0_6px_currentColor] dark:bg-white"
                     aria-hidden="true"
                   />
                 )}
-
-                <span className="sr-only">{item.name}</span>
               </Link>
             )
           })}
 
-          {/* Apple Dock Divider */}
           <div
-            className="h-5 w-px bg-border/60 dark:bg-white/15 mx-0.5 shrink-0"
+            className="mx-0.5 h-7 w-px shrink-0 bg-border/60 dark:bg-white/15"
             aria-hidden="true"
           />
 
-          {/* 5th Item: Search Trigger */}
           <button
             type="button"
             onClick={() => setIsSearchOpen((prev) => !prev)}
@@ -94,58 +88,57 @@ export default function MobileDock() {
             aria-label="Search movies"
             aria-expanded={isSearchOpen}
             className={cn(
-              "group relative flex size-11 items-center justify-center rounded-full transition-all duration-200 active:scale-90 cursor-pointer",
+              "group relative flex min-w-0 flex-1 cursor-pointer flex-col items-center justify-center rounded-xl px-1 py-1.5 transition-all duration-200 active:scale-95",
               isSearchOpen
-                ? "bg-primary text-primary-foreground shadow-md"
-                : "text-muted-foreground hover:text-foreground hover:bg-black/5 dark:hover:bg-white/10 active:bg-black/10"
+                ? "bg-primary font-semibold text-primary-foreground shadow-md"
+                : "text-muted-foreground hover:bg-black/5 hover:text-foreground active:bg-black/10 dark:hover:bg-white/10"
             )}
           >
-            <Search className="size-5 transition-transform duration-200 group-hover:scale-110" />
+            <Search className="mb-0.5 size-5 shrink-0 transition-transform duration-200 group-hover:scale-105" />
+
+            {/*<span className="text-[10px] sm:text-[11px] font-medium tracking-tight truncate max-w-full leading-tight">
+              Search
+            </span>*/}
 
             {isSearchOpen && (
               <span
-                className="absolute bottom-1 size-1 rounded-full bg-primary-foreground shadow-[0_0_6px_currentColor]"
+                className="absolute bottom-0.5 size-1 rounded-full bg-primary-foreground shadow-[0_0_6px_currentColor]"
                 aria-hidden="true"
               />
             )}
-
-            <span className="sr-only">Search</span>
           </button>
         </div>
       </nav>
 
-      {/* Apple Spotlight Search Modal */}
       {isSearchOpen && (
         <div
-          className="fixed inset-0 z-50 flex flex-col justify-start px-4 pt-16 md:hidden animate-in fade-in-0 duration-200"
+          className="fixed inset-0 z-50 flex animate-in flex-col justify-start px-4 pt-16 duration-200 fade-in-0 md:hidden"
           role="dialog"
           aria-modal="true"
           aria-label="Spotlight Search"
         >
-          {/* Backdrop */}
           <div
             className="fixed inset-0 bg-black/40 backdrop-blur-md transition-opacity"
             onClick={() => setIsSearchOpen(false)}
             aria-hidden="true"
           />
 
-          {/* Spotlight Card */}
-          <div className="relative mx-auto w-full max-w-md overflow-hidden rounded-2xl border border-white/20 dark:border-white/10 bg-background/95 dark:bg-neutral-900/95 p-4 shadow-2xl backdrop-blur-2xl ring-1 ring-black/5 animate-in zoom-in-95 slide-in-from-top-3 duration-200">
+          <div className="relative mx-auto w-full max-w-md animate-in overflow-hidden rounded-2xl border border-white/20 bg-background/95 p-4 shadow-2xl ring-1 ring-black/5 backdrop-blur-2xl duration-200 zoom-in-95 slide-in-from-top-3 dark:border-white/10 dark:bg-neutral-900/95">
             <div className="flex items-center gap-3 border-b border-border/60 pb-3">
-              <Search className="size-5 text-muted-foreground shrink-0" />
+              <Search className="size-5 shrink-0 text-muted-foreground" />
               <input
                 ref={searchInputRef}
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search movies, genres, actors..."
-                className="w-full bg-transparent text-sm placeholder:text-muted-foreground outline-none text-foreground"
+                className="w-full bg-transparent text-sm text-foreground outline-none placeholder:text-muted-foreground"
               />
               {searchQuery && (
                 <button
                   type="button"
                   onClick={() => setSearchQuery("")}
-                  className="text-muted-foreground hover:text-foreground rounded-full p-1 cursor-pointer"
+                  className="cursor-pointer rounded-full p-1 text-muted-foreground hover:text-foreground"
                   aria-label="Clear search input"
                 >
                   <X className="size-4" />
@@ -154,15 +147,14 @@ export default function MobileDock() {
               <button
                 type="button"
                 onClick={() => setIsSearchOpen(false)}
-                className="rounded-lg bg-muted px-2 py-1 text-xs font-medium text-muted-foreground hover:text-foreground cursor-pointer"
+                className="cursor-pointer rounded-lg bg-muted px-2 py-1 text-xs font-medium text-muted-foreground hover:text-foreground"
               >
                 Done
               </button>
             </div>
 
-            {/* Quick Suggestions / Trending Tags */}
             <div className="mt-3 flex flex-col gap-2">
-              <span className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
+              <span className="text-[11px] font-medium tracking-wider text-muted-foreground uppercase">
                 Quick Searches
               </span>
               <div className="flex flex-wrap gap-1.5">
@@ -177,7 +169,7 @@ export default function MobileDock() {
                     key={tag}
                     type="button"
                     onClick={() => setSearchQuery(tag)}
-                    className="rounded-full bg-muted/70 hover:bg-muted px-3 py-1 text-xs text-foreground/80 hover:text-foreground transition-colors cursor-pointer"
+                    className="cursor-pointer rounded-full bg-muted/70 px-3 py-1 text-xs text-foreground/80 transition-colors hover:bg-muted hover:text-foreground"
                   >
                     {tag}
                   </button>
