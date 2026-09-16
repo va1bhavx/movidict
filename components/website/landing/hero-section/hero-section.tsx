@@ -32,7 +32,7 @@ export default function HeroSection() {
         </p>
 
         <div className="-mx-1 flex touch-pan-x snap-x scrollbar-none items-center gap-3 overflow-x-auto px-1 py-2">
-          {FEATURED_MOVIES.slice(0, 4).map((movie) => {
+          {FEATURED_MOVIES.slice(0, 9).map((movie) => {
             const isSelected = movie.id === activeMovie.id
 
             return (
