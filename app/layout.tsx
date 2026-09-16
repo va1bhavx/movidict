@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { cn } from "@/lib/utils"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import Navbar from "@/components/layout/navbar"
+import MobileDock from "@/components/layout/mobile-dock"
 
 const manropeHeading = Manrope({
   subsets: ["latin"],
@@ -40,14 +41,17 @@ export default function RootLayout({
           <ThemeProvider>
             <div className="relative flex flex-col gap-4">
               {/*headers*/}
-              <header className="sticky top-0 border-b border-border bg-background px-4 py-4">
+              <header className="sticky top-0 z-40 border-b border-border bg-background/90 backdrop-blur-md px-4 py-4">
                 <Navbar />
               </header>
               {/*main*/}
 
-              <main className="flex p-4">{children}</main>
+              <main className="flex p-4 pb-24 md:pb-4">{children}</main>
 
               {/*footer*/}
+
+              {/* Mobile Dock (pinned to viewport bottom) */}
+              <MobileDock />
             </div>
           </ThemeProvider>
         </TooltipProvider>

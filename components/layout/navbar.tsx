@@ -9,18 +9,25 @@ export default function Navbar() {
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-12">
         <h1 className="font-heading text-3xl font-bold">Movidict.</h1>
-        <nav>
-          <ul className="flex items-center gap-4">
-            {NAV_URLS.map((url) => (
-              <Link href={url.href} key={url.id}>
-                {url.name}
-              </Link>
-            ))}
+        <nav className="hidden md:block">
+          <ul className="flex items-center gap-8">
+            {NAV_URLS.map((url) => {
+              const Icon = url.icon
+              return (
+                <Link
+                  href={url.href}
+                  key={url.id}
+                  className="flex items-center gap-2"
+                >
+                  <Icon className="size-4" /> {url.name}
+                </Link>
+              )
+            })}
           </ul>
         </nav>
       </div>
-      <div className="flex w-120 items-center gap-4">
-        <div className="w-full">
+      <div className="flex max-w-full items-center gap-4 md:max-w-120">
+        <div className="hidden w-full md:block">
           <Input className="w-full max-w-lg" placeholder="Search any movie" />
         </div>
         <Button
@@ -33,3 +40,4 @@ export default function Navbar() {
     </div>
   )
 }
+
