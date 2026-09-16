@@ -26,7 +26,7 @@ export default function Series() {
     <section className="w-full">
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <div className="flex justify-between gap-4 sm:items-center">
-          <div className="flex w-full flex-row items-center justify-between gap-5">
+          <div className="flex w-full flex-row items-center justify-between gap-5 sm:w-fit">
             <h1 className="text-xl">Series</h1>
             <TabsList variant="default" className={"w-full"}>
               {SERIES_EXPLORER_TABS.map((tab) => (
@@ -44,7 +44,10 @@ export default function Series() {
           </Link>
         </div>
 
-        <TabsContent value={activeTab} className="mt-8 flex flex-wrap gap-8">
+        <TabsContent
+          value={activeTab}
+          className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6"
+        >
           {FEATURED_MOVIES.slice(0, 14).map((movie) => (
             <MovieCard movie={movie} key={movie.id} />
           ))}

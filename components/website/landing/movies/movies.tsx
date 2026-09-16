@@ -36,7 +36,7 @@ export default function Movies() {
     <section className="w-full">
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <div className="flex gap-4 sm:items-center sm:justify-between">
-          <div className="flex w-full flex-col gap-3 sm:flex-row sm:items-center sm:gap-5">
+          <div className="flex w-full flex-col gap-3 sm:w-fit sm:flex-row sm:items-center sm:gap-5">
             <h1 className="text-xl">Movies</h1>
             <TabsList variant="default" className={"w-full"}>
               {MOVIE_EXPLORER_TABS.map((tab) => (
@@ -54,7 +54,10 @@ export default function Movies() {
           </Link>
         </div>
 
-        <TabsContent value={activeTab} className="mt-8 flex flex-wrap gap-8">
+        <TabsContent
+          value={activeTab}
+          className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6"
+        >
           {FEATURED_MOVIES.slice(0, 14).map((movie) => (
             <MovieCard movie={movie} key={movie.id} />
           ))}

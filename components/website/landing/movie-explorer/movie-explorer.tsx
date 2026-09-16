@@ -44,7 +44,7 @@ export default function MovieExplorer() {
           {/*movie cards*/}
           <TabsContent
             value={activeTab}
-            className={"mt-8 flex flex-wrap gap-8"}
+            className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6"
           >
             {FEATURED_MOVIES.slice(0, 14).map((movie) => (
               <MovieCard movie={movie} key={movie.id} />
