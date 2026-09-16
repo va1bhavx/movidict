@@ -14,7 +14,7 @@ export default function MovieCard({ movie }: { movie: Movie }) {
           "group relative shrink-0 cursor-pointer snap-start overflow-hidden rounded-lg text-left opacity-60 ring-2 ring-transparent transition-[border-color,opacity,transform] duration-200 hover:scale-105 hover:border-white/30 hover:opacity-100"
         }
       >
-        <div className="relative h-48 w-38 overflow-hidden rounded-lg bg-neutral-900 sm:h-52 sm:w-36 md:h-54 md:w-44">
+        <div className="relative h-62 w-46 min-w-38 overflow-hidden rounded-lg bg-neutral-900 sm:h-52 sm:w-40 md:h-54 md:w-44">
           <Image
             src={movie.image}
             alt={movie.title}
