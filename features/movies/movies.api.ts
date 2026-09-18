@@ -5,3 +5,9 @@ export const getUpcomingMovies = async () => {
 
   return data
 }
+
+export const getNowPlayingMovies = async () => {
+  const { data } = await api.get("/movies/now_playing")
+
+  return data
+}

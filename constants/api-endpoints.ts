@@ -8,6 +8,10 @@ export const API_ENDPOINTS = {
     details: (id: number | string) => `/movie/${id}`,
   },
 
+  genres: {
+    movies: "/genre/movie/list",
+  },
+
   search: {
     movies: "/search/movie",
     multi: "/search/multi",
