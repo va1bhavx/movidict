@@ -2,17 +2,30 @@ import { Movie } from "@/types/movies.types"
 import Image from "next/image"
 import { Badge } from "../ui/badge"
 import Link from "next/link"
-import { Star } from "lucide-react"
+import { Star, TrianglesCenterlineDashedVertical } from "lucide-react"
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip"
+import { toast } from "sonner"
+import { useState } from "react"
 
-export default function MovieCard({ movie }: { movie: Movie }) {
+export default function MovieCard({
+  movie,
+  type = "movie",
+  isComparing,
+  onCompare,
+}: {
+  movie: Movie
+  type?: string
+  isComparing: boolean
+  onCompare: () => void
+}) {
   return (
-    <Link href={`/movie/${movie.id}`} className="w-full">
+    <Link href={`/${type}/${movie.id}`} className="w-full">
       <button
         key={movie.id}
         type="button"
         aria-label={movie.title}
         className={
-          "group relative w-full shrink-0 cursor-pointer snap-start overflow-hidden rounded-lg text-left opacity-60 ring-2 ring-transparent transition-[border-color,opacity,transform] duration-200 hover:scale-105 hover:border-white/30 hover:opacity-100"
+          "group relative w-full shrink-0 cursor-pointer snap-start overflow-hidden rounded-lg text-left opacity-60 ring-2 ring-transparent transition-[border-color,opacity,transform] duration-200 hover:border-white/30 hover:opacity-100"
         }
       >
         <div className="relative aspect-2/3 max-w-full min-w-38 overflow-hidden rounded-lg bg-neutral-900 sm:w-44 md:w-56 xl:w-64">
@@ -24,13 +37,45 @@ export default function MovieCard({ movie }: { movie: Movie }) {
           />
 
           <div className="absolute top-2 left-2">
-            <Badge
-              variant={"secondary"}
+            <Tooltip>
+              <TooltipTrigger
+                render={
+                  <Badge
+                    variant={"secondary"}
 
-              className="border-none! text-[10px] ring ring-chart-1"
-            >
-              {movie.duration}
-            </Badge>
+                    className="border-none! text-[10px] ring ring-chart-1"
+                  >
+                    {movie.duration}
+                  </Badge>
+                }
+              />
+              <TooltipContent>Movie Duration</TooltipContent>
+            </Tooltip>
+          </div>
+
+          <div className="absolute top-2 right-2">
+            <Tooltip>
+              <TooltipTrigger
+                render={
+                  <Badge
+                    variant="secondary"
+                    className={
+                      isComparing
+                        ? "text-emerald-400 ring-emerald-400"
+                        : "ring-chart-1"
+                    }
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      e.preventDefault()
+                      onCompare()
+                    }}
+                  >
+                    <TrianglesCenterlineDashedVertical />
+                  </Badge>
+                }
+              />
+              <TooltipContent>Compare</TooltipContent>
+            </Tooltip>
           </div>
         </div>
         <div className="mt-2 px-1">

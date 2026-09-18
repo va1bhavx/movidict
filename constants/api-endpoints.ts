@@ -1,14 +1,15 @@
 export const API_ENDPOINTS = {
   movies: {
-    popular: "/movies/popular",
-    trending: "/movies/trending",
-    upcoming: "/movies/upcoming",
-    topRated: "/movies/top-rated",
-    details: (id: number | string) => `/movies/${id}`,
+    popular: "/movie/popular",
+    trending: "/trending/movie/day",
+    upcoming: "/movie/upcoming",
+    topRated: "/movie/top_rated",
+    nowPlaying: "/movie/now_playing",
+    details: (id: number | string) => `/movie/${id}`,
   },
 
   search: {
-    movies: "/search/movies",
+    movies: "/search/movie",
     multi: "/search/multi",
   },
 

@@ -7,6 +7,7 @@ import { TooltipProvider } from "@/components/ui/tooltip"
 import Navbar from "@/components/layout/navbar"
 import MobileDock from "@/components/layout/mobile-dock"
 import QueryClientProviders from "@/providers/query-client.provider"
+import { Toaster } from "@/components/ui/sonner"
 
 const manropeHeading = Manrope({
   subsets: ["latin"],
@@ -48,7 +49,10 @@ export default function RootLayout({
                 </header>
                 {/*main*/}
 
-                <main className="flex p-4 pb-24 md:pb-4">{children}</main>
+                <main className="flex p-4 pb-24 md:pb-4">
+                  {children}
+                  <Toaster />
+                </main>
 
                 {/*footer*/}
 

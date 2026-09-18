@@ -6,9 +6,14 @@ import { FEATURED_MOVIES } from "@/lib/data/mock-movie-data"
 import { Movie } from "@/types/movies.types"
 import { useState } from "react"
 import HeroSectionData from "./component/hero-section-data"
+import { useGetUpcomingMovies } from "@/features/movies/movies.hooks"
 
 export default function HeroSection() {
   const [activeMovie, setActiveMovie] = useState<Movie>(FEATURED_MOVIES[0])
+
+  // const { data, isLoading, isError } = useGetUpcomingMovies()
+
+  // console.log(data, "data for trending movie")
 
   return (
     <div

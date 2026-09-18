@@ -1,10 +1,16 @@
+"use client"
+
 import { NAV_URLS } from "@/lib/data/nav-urls"
 import Link from "next/link"
 import { Input } from "../ui/input"
 import { User2Icon } from "lucide-react"
 import { Button } from "../ui/button"
+import useTypingPlaceholder from "@/hooks/useTypingPlaceholder"
+import { PLACEHOLDER_DATA } from "@/lib/data/general.data"
 
 export default function Navbar() {
+  const placeholder = useTypingPlaceholder(PLACEHOLDER_DATA)
+
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-12">
@@ -28,7 +34,7 @@ export default function Navbar() {
       </div>
       <div className="flex max-w-full items-center gap-4 md:max-w-120">
         <div className="hidden w-full md:block">
-          <Input className="w-full max-w-lg" placeholder="Search any movie" />
+          <Input className="w-full max-w-lg" placeholder={placeholder} />
         </div>
         <Button
           variant={"ghost"}
@@ -40,4 +46,3 @@ export default function Navbar() {
     </div>
   )
 }
-

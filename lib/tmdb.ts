@@ -1,13 +1,13 @@
 import axios from "axios"
 
-export const api = axios.create({
+export const tmdb = axios.create({
   baseURL: `${process.env.TMDB_API_URL}${process.env.TMDB_API_VERSION}/`,
   headers: {
     Accept: "application/json",
   },
 })
 
-api.interceptors.request.use(
+tmdb.interceptors.request.use(
   (config) => {
     config.headers.Authorization = `Bearer ${process.env.TMDB_API_READ_ACCESS_TOKEN}`
     return config
@@ -15,7 +15,7 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 )
 
-api.interceptors.response.use(
+tmdb.interceptors.response.use(
   (response) => {
     return response
   },
