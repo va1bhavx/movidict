@@ -7,7 +7,7 @@ export default function Page() {
   return (
     <div className="flex w-full flex-col gap-8">
       <HeroSection />
-      <MovieExplorer />
+      {/*<MovieExplorer />*/}
       <Movies />
       <Series />
     </div>

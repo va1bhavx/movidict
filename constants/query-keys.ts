@@ -4,11 +4,21 @@ export const QUERY_KEYS = {
     trending: ["movies", "trending"],
     upcoming: ["movies", "upcoming"],
     nowPlaying: ["movies", "nowPlaying"],
+    topRated: ["movies", "topRated"],
 
     details: (id: number) => ["movies", "details", id],
   },
   genres: {
     movies: ["genres", "movies"],
+  },
+
+  series: {
+    popular: ["tv", "popular"],
+    airingToday: ["tv", "trending"],
+    onTheAir: ["tv", "upcoming"],
+    topRated: ["tv", "topRated"],
+
+    details: (id: number) => ["tv", "details", id],
   },
 
   search: {

@@ -4,25 +4,32 @@ import MovieCard from "@/components/component/movie-card"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { COMPARE_LIMIT } from "@/constants/general"
-import { FEATURED_MOVIES } from "@/lib/data/mock-movie-data"
+import {
+  useGetNowPlayingMovies,
+  useGetPopularMovies,
+  useGetTopRatedMovies,
+  useGetUpcomingMovies,
+} from "@/features/movies/movies.hooks"
+import { Movie } from "@/features/movies/movies.types"
 import { ChevronRight } from "lucide-react"
 import Link from "next/link"
 import { useState } from "react"
 import { toast } from "sonner"
+import CardsSkeleton from "../../../component/cards-skeletons"
 
 const MOVIE_EXPLORER_TABS = [
   {
-    key: "latest",
+    key: "now_playing",
     value: "Latest",
   },
 
   {
-    key: "trending",
-    value: "Trending",
+    key: "popular",
+    value: "Popular",
   },
 
   {
-    key: "top-rated",
+    key: "top_rated",
     value: "Top Rated",
   },
 
@@ -32,8 +39,136 @@ const MOVIE_EXPLORER_TABS = [
   },
 ]
 
+function NowPlayingTab({
+  compareIds,
+  handleCompare,
+}: {
+  compareIds: number[]
+  handleCompare: (moviedId: number) => void
+}) {
+  const {
+    data: nowPlayingMovies,
+    isLoading: nowPlayingLoading,
+    isError: nowPlayingError,
+  } = useGetNowPlayingMovies()
+
+  if (nowPlayingLoading) {
+    return [1, 2, 3, 4, 5, 6].map((i) => <CardsSkeleton />)
+  }
+
+  return (
+    <>
+      {nowPlayingMovies?.result?.results.map((movie: Movie) => (
+        <MovieCard
+          key={movie.id}
+          type="movie"
+          movie={movie}
+          isComparing={compareIds.includes(movie.id)}
+          onCompare={() => handleCompare(movie.id)}
+        />
+      ))}
+    </>
+  )
+}
+
+function PopularMoviesTab({
+  compareIds,
+  handleCompare,
+}: {
+  compareIds: number[]
+  handleCompare: (moviedId: number) => void
+}) {
+  const {
+    data: popularMovies,
+    isLoading: popularLoading,
+    isError: popularError,
+  } = useGetPopularMovies()
+
+  if (popularLoading) {
+    return [1, 2, 3, 4, 5, 6].map((i) => <CardsSkeleton />)
+  }
+
+  return (
+    <>
+      {popularMovies?.map((movie: Movie) => (
+        <MovieCard
+          key={movie.id}
+          type="movie"
+          movie={movie}
+          isComparing={compareIds.includes(movie.id)}
+          onCompare={() => handleCompare(movie.id)}
+        />
+      ))}
+    </>
+  )
+}
+
+function TopRatedMoviesTab({
+  compareIds,
+  handleCompare,
+}: {
+  compareIds: number[]
+  handleCompare: (moviedId: number) => void
+}) {
+  const {
+    data: topRatedMovies,
+    isLoading: topRatedLoading,
+    isError: topRatedError,
+  } = useGetTopRatedMovies()
+
+  if (topRatedLoading) {
+    return [1, 2, 3, 4, 5, 6].map((i) => <CardsSkeleton />)
+  }
+
+  return (
+    <>
+      {topRatedMovies?.map((movie: Movie) => (
+        <MovieCard
+          key={movie.id}
+          type="movie"
+          movie={movie}
+          isComparing={compareIds.includes(movie.id)}
+          onCompare={() => handleCompare(movie.id)}
+        />
+      ))}
+    </>
+  )
+}
+
+function UpcomingMoviesTab({
+  compareIds,
+  handleCompare,
+}: {
+  compareIds: number[]
+  handleCompare: (moviedId: number) => void
+}) {
+  const {
+    data: upcomingMovies,
+    isLoading: upcomingLoading,
+    isError: upcomingError,
+  } = useGetUpcomingMovies()
+
+  if (upcomingLoading) {
+    return [1, 2, 3, 4, 5, 6].map((i) => <CardsSkeleton />)
+  }
+
+  return (
+    <>
+      {upcomingMovies?.result?.results.map((movie: Movie) => (
+        <MovieCard
+          key={movie.id}
+          type="movie"
+          movie={movie}
+          isComparing={compareIds.includes(movie.id)}
+          onCompare={() => handleCompare(movie.id)}
+        />
+      ))}
+    </>
+  )
+}
+
 export default function Movies() {
-  const [activeTab, setActiveTab] = useState("latest")
+  const [activeTab, setActiveTab] = useState("now_playing")
 
   const [compareIds, setCompareIds] = useState<number[]>([])
 
@@ -84,14 +219,30 @@ export default function Movies() {
           value={activeTab}
           className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6"
         >
-          {FEATURED_MOVIES.slice(0, 14).map((movie) => (
-            <MovieCard
-              movie={movie}
-              key={movie.id}
-              isComparing={compareIds.includes(movie.id)}
-              onCompare={() => handleCompare(movie.id)}
+          {activeTab === "now_playing" && (
+            <NowPlayingTab
+              compareIds={compareIds}
+              handleCompare={handleCompare}
             />
-          ))}
+          )}
+          {activeTab === "popular" && (
+            <PopularMoviesTab
+              compareIds={compareIds}
+              handleCompare={handleCompare}
+            />
+          )}
+          {activeTab === "top_rated" && (
+            <TopRatedMoviesTab
+              compareIds={compareIds}
+              handleCompare={handleCompare}
+            />
+          )}
+          {activeTab === "upcoming" && (
+            <UpcomingMoviesTab
+              compareIds={compareIds}
+              handleCompare={handleCompare}
+            />
+          )}
         </TabsContent>
       </Tabs>
     </section>

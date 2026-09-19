@@ -3,18 +3,18 @@ import { Badge } from "../ui/badge"
 import Link from "next/link"
 import { Star, TrianglesCenterlineDashedVertical } from "lucide-react"
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip"
-import { Movie } from "@/features/movies/movies.types"
 import { TMDB_IMAGE_URL } from "@/constants/general"
 import dayjs from "dayjs"
+import { Series } from "@/features/series/series.types"
 import { useState } from "react"
 
-export default function MovieCard({
-  movie,
+export default function SeriesCard({
+  series,
   type = "movie",
   isComparing,
   onCompare,
 }: {
-  movie: Movie
+  series: Series
   type?: string
   isComparing: boolean
   onCompare: () => void
@@ -22,20 +22,20 @@ export default function MovieCard({
   const [imageError, setImageError] = useState<boolean>(false)
 
   return (
-    <Link href={`/${type}/${movie.id}`} className="w-full">
+    <Link href={`/${type}/${series.id}`} className="w-full">
       <button
-        key={movie.id}
+        key={series.id}
         type="button"
-        aria-label={movie.original_title}
+        aria-label={series.original_name}
         className={
           "group relative w-full shrink-0 cursor-pointer snap-start overflow-hidden rounded-lg text-left opacity-60 ring-2 ring-transparent transition-[border-color,opacity,transform] duration-200 hover:border-white/30 hover:opacity-100"
         }
       >
         <div className="relative aspect-2/3 max-w-full min-w-38 overflow-hidden rounded-lg bg-neutral-900 sm:w-44 md:w-56 xl:w-64">
-          {!imageError && (movie.poster_path || movie.backdrop_path) ? (
+          {!imageError && (series.poster_path || series.backdrop_path) ? (
             <Image
-              src={`${TMDB_IMAGE_URL}${movie.poster_path ?? movie.backdrop_path}`}
-              alt={movie.original_title}
+              src={`${TMDB_IMAGE_URL}${series.poster_path ?? series.backdrop_path}`}
+              alt={series.original_name}
               fill
               onError={() => setImageError(true)}
               className="object-cover transition-transform duration-300"
@@ -43,7 +43,7 @@ export default function MovieCard({
           ) : (
             <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-gray-800 to-gray-900 p-3">
               <span className="line-clamp-3 text-center text-sm font-medium text-gray-400">
-                {movie.original_title}
+                {series.original_name}
               </span>
             </div>
           )}
@@ -95,18 +95,18 @@ export default function MovieCard({
             <TooltipTrigger
               render={
                 <p className="max-w-30 truncate text-sm font-medium text-muted-foreground">
-                  {movie.title}
+                  {series.original_name}
                 </p>
               }
             />
-            <TooltipContent>{movie.title}</TooltipContent>
+            <TooltipContent>{series.original_name}</TooltipContent>
           </Tooltip>
 
           <div className="flex items-center justify-between">
-            <span> {dayjs(movie?.release_date).format("DD/MM/YYYY")}</span>
+            <span> {dayjs(series?.first_air_date).format("DD/MM/YYYY")}</span>
             <span className="flex items-center gap-2">
               <Star className="size-3 fill-amber-400" />
-              {movie?.vote_average}
+              {series?.vote_average}
             </span>
           </div>
         </div>

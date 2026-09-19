@@ -1,10 +1,7 @@
 "use client"
 
-import MovieCard from "@/components/component/movie-card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { COMPARE_LIMIT } from "@/constants/general"
-import { FEATURED_MOVIES } from "@/lib/data/mock-movie-data"
-import handleCompare from "@/utils/handle-compare"
 import { useState } from "react"
 import { toast } from "sonner"
 
@@ -66,7 +63,7 @@ export default function MovieExplorer() {
             value={activeTab}
             className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6"
           >
-            {FEATURED_MOVIES.slice(0, 14).map((movie) => (
+            {/*{FEATURED_MOVIES.slice(0, 14).map((movie) => (
               <MovieCard
                 movie={movie}
                 key={movie.id}
@@ -74,7 +71,7 @@ export default function MovieExplorer() {
                 isComparing={compareIds.includes(movie.id)}
                 onCompare={() => handleCompare(movie.id)}
               />
-            ))}
+            ))}*/}
           </TabsContent>
         </Tabs>
       </div>

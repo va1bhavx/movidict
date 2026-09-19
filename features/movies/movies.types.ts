@@ -15,3 +15,17 @@ export interface Movie {
   vote_average: number
   vote_count: number
 }
+
+export interface MovieList {
+  backdrop: string
+  description: string
+  duration: string
+  genres: string[]
+  id: 14
+  image: string
+  rating: string
+  reviews: string
+  tagline: string
+  title: string
+  year: string
+}

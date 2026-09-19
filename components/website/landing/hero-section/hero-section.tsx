@@ -13,11 +13,7 @@ import HeroSectionSkeleton from "./hero-section-skeleton"
 
 export default function HeroSection() {
   const { data, isLoading, isError } = useGetNowPlayingMovies()
-  const {
-    data: genres,
-    isLoading: genresLoading,
-    isError: genresError,
-  } = useGetMovieGenres()
+  const { data: genres } = useGetMovieGenres()
 
   const [activeMovie, setActiveMovie] = useState<Movie | null>(null)
 
@@ -28,9 +24,6 @@ export default function HeroSection() {
       setActiveMovie(movies[0])
     }
   }, [movies, activeMovie])
-
-  console.log(data, "data")
-  console.log(activeMovie, "activeMovie")
 
   if (isLoading) {
     return <HeroSectionSkeleton />

@@ -1,10 +1,18 @@
 "use client"
 
+import CardsSkeleton from "@/components/component/cards-skeletons"
 import MovieCard from "@/components/component/movie-card"
+import SeriesCard from "@/components/component/series-card"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { COMPARE_LIMIT } from "@/constants/general"
-import { FEATURED_MOVIES } from "@/lib/data/mock-movie-data"
+import {
+  useGetAiringTodaySeries,
+  useGetOnTheAirSeries,
+  useGetPopularSeries,
+  useGetTopRatedSeries,
+} from "@/features/series/series.hooks"
+import type { Series } from "@/features/series/series.types"
 import { ChevronRight } from "lucide-react"
 import Link from "next/link"
 import { useState } from "react"
@@ -12,18 +20,140 @@ import { toast } from "sonner"
 
 const SERIES_EXPLORER_TABS = [
   {
-    key: "latest",
+    key: "airing_today",
     value: "Latest",
   },
 
   {
-    key: "trending",
-    value: "Trending",
+    key: "on_the_air",
+    value: "On the air",
+  },
+
+  {
+    key: "popular",
+    value: "Popular",
+  },
+
+  {
+    key: "top_rated",
+    value: "Top Rated",
   },
 ]
 
+function AiringTodayTab({
+  compareIds,
+  handleCompare,
+}: {
+  compareIds: number[]
+  handleCompare: (moviedId: number) => void
+}) {
+  const { data, isLoading, isError } = useGetAiringTodaySeries()
+
+  if (isLoading) {
+    return [1, 2, 3, 4, 5, 6].map((i) => <CardsSkeleton />)
+  }
+
+  return (
+    <>
+      {data?.map((series: Series) => (
+        <SeriesCard
+          key={series.id}
+          type="series"
+          series={series}
+          isComparing={compareIds.includes(series.id)}
+          onCompare={() => handleCompare(series.id)}
+        />
+      ))}
+    </>
+  )
+}
+
+function OnTheAirTab({
+  compareIds,
+  handleCompare,
+}: {
+  compareIds: number[]
+  handleCompare: (moviedId: number) => void
+}) {
+  const { data, isLoading, isError } = useGetOnTheAirSeries()
+
+  if (isLoading) {
+    return [1, 2, 3, 4, 5, 6].map((i) => <CardsSkeleton />)
+  }
+
+  return (
+    <>
+      {data?.map((series: Series) => (
+        <SeriesCard
+          key={series.id}
+          type="series"
+          series={series}
+          isComparing={compareIds.includes(series.id)}
+          onCompare={() => handleCompare(series.id)}
+        />
+      ))}
+    </>
+  )
+}
+
+function TopRatedSeriesTab({
+  compareIds,
+  handleCompare,
+}: {
+  compareIds: number[]
+  handleCompare: (moviedId: number) => void
+}) {
+  const { data, isLoading, isError } = useGetTopRatedSeries()
+
+  if (isLoading) {
+    return [1, 2, 3, 4, 5, 6].map((i) => <CardsSkeleton />)
+  }
+
+  return (
+    <>
+      {data?.map((series: Series) => (
+        <SeriesCard
+          key={series.id}
+          type="series"
+          series={series}
+          isComparing={compareIds.includes(series.id)}
+          onCompare={() => handleCompare(series.id)}
+        />
+      ))}
+    </>
+  )
+}
+
+function PopularTab({
+  compareIds,
+  handleCompare,
+}: {
+  compareIds: number[]
+  handleCompare: (moviedId: number) => void
+}) {
+  const { data, isLoading, isError } = useGetPopularSeries()
+
+  if (isLoading) {
+    return [1, 2, 3, 4, 5, 6].map((i) => <CardsSkeleton />)
+  }
+
+  return (
+    <>
+      {data?.map((series: Series) => (
+        <SeriesCard
+          key={series.id}
+          type="series"
+          series={series}
+          isComparing={compareIds.includes(series.id)}
+          onCompare={() => handleCompare(series.id)}
+        />
+      ))}
+    </>
+  )
+}
+
 export default function Series() {
-  const [activeTab, setActiveTab] = useState("latest")
+  const [activeTab, setActiveTab] = useState("airing_today")
   const [compareIds, setCompareIds] = useState<number[]>([])
 
   const handleCompare = (movieId: number) => {
@@ -72,15 +202,27 @@ export default function Series() {
           value={activeTab}
           className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6"
         >
-          {FEATURED_MOVIES.slice(0, 14).map((movie) => (
-            <MovieCard
-              movie={movie}
-              key={movie.id}
-              type="series"
-              isComparing={compareIds.includes(movie.id)}
-              onCompare={() => handleCompare(movie.id)}
+          {activeTab === "airing_today" && (
+            <AiringTodayTab
+              compareIds={compareIds}
+              handleCompare={handleCompare}
             />
-          ))}
+          )}
+          {activeTab === "on_the_air" && (
+            <OnTheAirTab
+              compareIds={compareIds}
+              handleCompare={handleCompare}
+            />
+          )}
+          {activeTab === "top_rated" && (
+            <TopRatedSeriesTab
+              compareIds={compareIds}
+              handleCompare={handleCompare}
+            />
+          )}
+          {activeTab === "popular" && (
+            <PopularTab compareIds={compareIds} handleCompare={handleCompare} />
+          )}
         </TabsContent>
       </Tabs>
     </section>
