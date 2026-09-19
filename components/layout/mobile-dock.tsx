@@ -6,12 +6,15 @@ import { NAV_URLS } from "@/lib/data/nav-urls"
 import { cn } from "@/lib/utils"
 import { Search, X } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
+import useTypingPlaceholder from "@/hooks/useTypingPlaceholder"
+import { PLACEHOLDER_DATA } from "@/lib/data/general.data"
 
 export default function MobileDock() {
   const pathname = usePathname()
   const [isSearchOpen, setIsSearchOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
   const searchInputRef = useRef<HTMLInputElement>(null)
+  const placeholder = useTypingPlaceholder(PLACEHOLDER_DATA)
 
   useEffect(() => {
     if (isSearchOpen) {
@@ -131,7 +134,7 @@ export default function MobileDock() {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search movies, genres, actors..."
+                placeholder={placeholder}
                 className="w-full bg-transparent text-sm text-foreground outline-none placeholder:text-muted-foreground"
               />
               {searchQuery && (
