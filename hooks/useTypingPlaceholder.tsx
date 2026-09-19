@@ -12,7 +12,7 @@ export default function useTypingPlaceholder(
   const [phraseIndex, setPhraseIndex] = useState<number>(0)
   const [isDeleting, setIsDeleting] = useState<boolean>(false)
 
-  const timeout = useRef<NodeJS.Timeout>()
+  const timeout = useRef<NodeJS.Timeout>(undefined)
 
   useEffect(() => {
     const current = phrases[phraseIndex % phrases.length]
