@@ -53,7 +53,7 @@ function NowPlayingTab({
   } = useGetNowPlayingMovies()
 
   if (nowPlayingLoading) {
-    return [1, 2, 3, 4, 5, 6].map((i) => <CardsSkeleton />)
+    return [1, 2, 3, 4, 5, 6].map((i) => <CardsSkeleton key={i} />)
   }
 
   const movies =
@@ -88,7 +88,7 @@ function PopularMoviesTab({
   } = useGetPopularMovies()
 
   if (popularLoading) {
-    return [1, 2, 3, 4, 5, 6].map((i) => <CardsSkeleton />)
+    return [1, 2, 3, 4, 5, 6].map((i) => <CardsSkeleton key={i} />)
   }
 
   return (
@@ -120,7 +120,7 @@ function TopRatedMoviesTab({
   } = useGetTopRatedMovies()
 
   if (topRatedLoading) {
-    return [1, 2, 3, 4, 5, 6].map((i) => <CardsSkeleton />)
+    return [1, 2, 3, 4, 5, 6].map((i) => <CardsSkeleton key={i} />)
   }
 
   return (
@@ -152,7 +152,7 @@ function UpcomingMoviesTab({
   } = useGetUpcomingMovies()
 
   if (upcomingLoading) {
-    return [1, 2, 3, 4, 5, 6].map((i) => <CardsSkeleton />)
+    return [1, 2, 3, 4, 5, 6].map((i) => <CardsSkeleton key={i} />)
   }
 
   return (

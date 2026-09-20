@@ -50,7 +50,7 @@ function AiringTodayTab({
   const { data, isLoading, isError } = useGetAiringTodaySeries()
 
   if (isLoading) {
-    return [1, 2, 3, 4, 5, 6].map((i) => <CardsSkeleton />)
+    return [1, 2, 3, 4, 5, 6].map((i) => <CardsSkeleton key={i} />)
   }
 
   return (
@@ -78,7 +78,7 @@ function OnTheAirTab({
   const { data, isLoading, isError } = useGetOnTheAirSeries()
 
   if (isLoading) {
-    return [1, 2, 3, 4, 5, 6].map((i) => <CardsSkeleton />)
+    return [1, 2, 3, 4, 5, 6].map((i) => <CardsSkeleton key={i} />)
   }
 
   return (
@@ -106,7 +106,7 @@ function TopRatedSeriesTab({
   const { data, isLoading, isError } = useGetTopRatedSeries()
 
   if (isLoading) {
-    return [1, 2, 3, 4, 5, 6].map((i) => <CardsSkeleton />)
+    return [1, 2, 3, 4, 5, 6].map((i) => <CardsSkeleton key={i} />)
   }
 
   return (
@@ -134,7 +134,7 @@ function PopularTab({
   const { data, isLoading, isError } = useGetPopularSeries()
 
   if (isLoading) {
-    return [1, 2, 3, 4, 5, 6].map((i) => <CardsSkeleton />)
+    return [1, 2, 3, 4, 5, 6].map((i) => <CardsSkeleton key={i} />)
   }
 
   return (

@@ -1,3 +1,4 @@
+import { MovieDetails } from "@/features/movies/movies.types"
 import { Movie } from "@/types/movies.types"
 
 export const FEATURED_MOVIES: Movie[] = [
@@ -336,5 +337,53 @@ export const FEATURED_MOVIES: Movie[] = [
       "More than forty years after the events of the first film, Lucius has taken his place as Emperor of Rome, while Maximus's son acquires a taste for the arena.",
     image: "/oppenheimer-poster.webp",
     backdrop: "/oppenheimer-backdrop.webp",
+  },
+]
+
+export const MOVIE_DETAILS: MovieDetails[] = [
+  {
+    adult: false,
+    backdrop_path: "/media/backdrop1.jpg",
+    belongs_to_collection: null,
+    budget: 200000000,
+    genres: [
+      { id: 28, name: "Action" },
+      { id: 878, name: "Science Fiction" },
+    ],
+    homepage: "https://example.com/movie1",
+    id: 101,
+    imdb_id: "tt10100001",
+    origin_country: ["US"],
+    original_language: "en",
+    original_title: "Quantum Horizon",
+    overview:
+      "A team of physicists discovers a rift in spacetime that threatens to unravel reality itself. They must race against time to close it before the universe collapses.",
+    popularity: 85.4,
+    poster_path: "/media/poster1.jpg",
+    production_companies: [
+      {
+        id: 1,
+        logo_path: "/media/logo1.png",
+        name: "Stellar Pictures",
+        origin_country: "US",
+      },
+    ],
+    production_countries: [
+      { iso_3166_1: "US", name: "United States of America" },
+    ],
+    release_date: "2025-07-18",
+    revenue: 950000000,
+    runtime: 148,
+    softcore: false,
+    spoken_languages: [
+      { english_name: "English", iso_639_1: "en", name: "English" },
+      { english_name: "Mandarin", iso_639_1: "zh", name: "Mandarin" },
+    ],
+    status: "Released",
+    tagline: "The universe has a deadline.",
+    title: "Quantum Horizon",
+    video: false,
+    vote_average: 8.2,
+    vote_count: 12450,
   },
 ]

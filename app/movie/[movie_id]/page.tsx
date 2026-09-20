@@ -1,3 +1,5 @@
+import DetailPage from "@/components/website/movie-detail/detail-page"
+
 export default async function MovieDetailsPage({
   params,
 }: {
@@ -5,5 +7,5 @@ export default async function MovieDetailsPage({
 }) {
   const { movie_id } = await params
 
-  return <div>Movie: {movie_id}</div>
+  return <DetailPage id={movie_id} />
 }

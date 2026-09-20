@@ -83,7 +83,7 @@ export default function HeroSection() {
               >
                 <div className="relative h-26 w-18 overflow-hidden rounded-[10px] bg-neutral-900 sm:h-28 sm:w-20 md:h-32 md:w-22">
                   <Image
-                    src={`${TMDB_IMAGE_URL}${movie.poster_path ?? movie.backdrop_path}  `}
+                    src={`${TMDB_IMAGE_URL}${movie.poster_path ?? movie.backdrop_path}`}
                     alt={movie.original_title}
                     fill
                     sizes="(max-width: 640px) 72px, (max-width: 768px) 80px, 88px"
