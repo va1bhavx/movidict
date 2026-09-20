@@ -24,7 +24,11 @@ export default function Navbar() {
       </div>
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-12">
-          <h1 className="font-heading text-3xl font-bold">Movidict.</h1>
+          <div className="flex items-baseline gap-1">
+            <h1 className="font-heading text-3xl font-bold">Movidict</h1>
+            <span className="h-1 w-1 rounded-lg bg-chart-3" />
+          </div>
+
           <nav className="hidden md:block">
             <ul className="flex items-center gap-8">
               {NAV_URLS.map((url) => {

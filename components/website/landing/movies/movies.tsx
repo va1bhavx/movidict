@@ -196,23 +196,32 @@ export default function Movies() {
   return (
     <section className="w-full">
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <div className="flex gap-4 sm:items-center sm:justify-between">
-          <div className="flex w-full flex-col gap-3 sm:w-fit sm:flex-row sm:items-center sm:gap-5">
-            <h1 className="text-xl">Movies</h1>
-            <TabsList variant="default" className={"w-full"}>
-              {MOVIE_EXPLORER_TABS.map((tab) => (
-                <TabsTrigger value={tab.key} key={tab.key}>
-                  {tab.value}
-                </TabsTrigger>
-              ))}
-            </TabsList>
-          </div>
+        <div className="flex items-center gap-3">
+          <h2 className="shrink-0 text-xl font-medium tracking-tight">
+            Movies
+          </h2>
 
-          <Link href={`/${activeTab}?type=movie`} className="hidden sm:block">
-            <Button variant="secondary" size="sm">
-              <ChevronRight />
-            </Button>
-          </Link>
+          <div className="flex min-w-0 flex-1 items-center gap-2">
+            <div className="min-w-0 flex-1 scrollbar-none overflow-x-auto">
+              <TabsList className="h-9 w-max gap-1 bg-transparent p-0">
+                {MOVIE_EXPLORER_TABS.map((tab) => (
+                  <TabsTrigger
+                    key={tab.key}
+                    value={tab.key}
+                    className="h-8 shrink-0 rounded-md px-3 text-xs whitespace-nowrap text-muted-foreground data-[state=active]:bg-secondary data-[state=active]:text-foreground"
+                  >
+                    {tab.value}
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+            </div>
+
+            <Link href={`/${activeTab}?type=series`} className="shrink-0">
+              <Button variant="secondary" size="icon" className="size-9">
+                <ChevronRight className="size-4" />
+              </Button>
+            </Link>
+          </div>
         </div>
 
         <TabsContent
