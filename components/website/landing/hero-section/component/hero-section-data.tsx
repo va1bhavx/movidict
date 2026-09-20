@@ -17,7 +17,7 @@ import { Genres } from "@/types/general.types"
 import Link from "next/link"
 
 interface HeroSectionDataProps {
-  movie: Movie | null
+  movie: Movie | undefined
   genres: Genres[] | undefined
 }
 

@@ -1,5 +1,5 @@
 import { QUERY_KEYS } from "@/constants/query-keys"
-import { useQuery } from "@tanstack/react-query"
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query"
 import {
   getNowPlayingMovies,
   getPopularMovies,
@@ -15,9 +15,15 @@ export const useGetUpcomingMovies = () => {
 }
 
 export const useGetNowPlayingMovies = () => {
-  return useQuery({
+  return useInfiniteQuery({
     queryKey: QUERY_KEYS.movies.nowPlaying,
-    queryFn: getNowPlayingMovies,
+    queryFn: ({ pageParam }) =>
+      getNowPlayingMovies({ page: pageParam as number }),
+    initialPageParam: 1,
+    getNextPageParam: (lastPage) => {
+      const { page, total_pages } = lastPage.result
+      return page < total_pages ? page + 1 : undefined
+    },
   })
 }
 

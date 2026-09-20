@@ -56,9 +56,12 @@ function NowPlayingTab({
     return [1, 2, 3, 4, 5, 6].map((i) => <CardsSkeleton />)
   }
 
+  const movies =
+    nowPlayingMovies?.pages.flatMap((page) => page.result.results) ?? []
+
   return (
     <>
-      {nowPlayingMovies?.result?.results.map((movie: Movie) => (
+      {movies.map((movie: Movie) => (
         <MovieCard
           key={movie.id}
           type="movie"

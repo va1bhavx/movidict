@@ -14,14 +14,15 @@ import HeroSectionSkeleton from "./hero-section-skeleton"
 export default function HeroSection() {
   const { data, isLoading, isError } = useGetNowPlayingMovies()
   const { data: genres } = useGetMovieGenres()
+  const movies = data?.pages.flatMap((page) => page.result.results) ?? []
 
-  const [activeMovie, setActiveMovie] = useState<Movie | null>(null)
+  // const [activeMovie, setActiveMovie] = useState<Movie | null>(null)
+  const [activeMovieId, setActiveMovieId] = useState<number | null>(null)
 
-  const movies = data?.result?.results ?? []
-
+  const activeMovie = movies.find((movie) => movie.id === activeMovieId)
   useEffect(() => {
-    if (movies.length > 0 && !activeMovie) {
-      setActiveMovie(movies[0])
+    if (movies.length > 0 && activeMovieId === null) {
+      setActiveMovieId(movies[0].id)
     }
   }, [movies, activeMovie])
 
@@ -71,7 +72,7 @@ export default function HeroSection() {
               <button
                 key={movie.id}
                 type="button"
-                onClick={() => setActiveMovie(movie)}
+                onClick={() => setActiveMovieId(movie.id)}
                 aria-label={`Select ${movie.original_title}`}
                 className={cn(
                   "relative shrink-0 cursor-pointer snap-start overflow-hidden rounded-xl text-left transition-[border-color,opacity] duration-200",

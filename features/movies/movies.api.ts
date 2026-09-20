@@ -1,4 +1,6 @@
 import { api } from "@/lib/axios"
+import { ApiSuccessResponse } from "@/types/general.types"
+import { MovieListResponse } from "./movies.types"
 
 export const getUpcomingMovies = async () => {
   const { data } = await api.get("/movies/upcoming")
@@ -6,8 +8,10 @@ export const getUpcomingMovies = async () => {
   return data
 }
 
-export const getNowPlayingMovies = async () => {
-  const { data } = await api.get("/movies/now_playing")
+export const getNowPlayingMovies = async ({ page }: { page: number }) => {
+  const { data } = await api.get<ApiSuccessResponse<MovieListResponse>>(
+    `/movies/now_playing?page=${page}`
+  )
 
   return data
 }
