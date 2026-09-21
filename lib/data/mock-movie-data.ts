@@ -367,6 +367,19 @@ export const MOVIE_DETAILS: MovieDetails[] = [
         name: "Stellar Pictures",
         origin_country: "US",
       },
+      {
+        id: 2,
+        logo_path: "/media/logo1.png",
+        name: "Bollywood",
+        origin_country: "IN",
+      },
+
+      {
+        id: 3,
+        logo_path: "/media/logo1.png",
+        name: "Something Pictures",
+        origin_country: "JP",
+      },
     ],
     production_countries: [
       { iso_3166_1: "US", name: "United States of America" },

@@ -13,9 +13,14 @@ import {
 } from "@/components/ui/carousel"
 import { MOVIE_DETAILS } from "@/lib/data/mock-movie-data"
 import dayjs from "dayjs"
+import duration from "dayjs/plugin/duration"
 import Autoplay from "embla-carousel-autoplay"
 import { Bookmark, Share2, Star, TvMinimalPlayIcon } from "lucide-react"
 import countryToCurrency from "country-to-currency"
+import Link from "next/link"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { getInitials } from "@/utils/general"
+dayjs.extend(duration)
 
 export default function DetailPageContent() {
   const movie_details = MOVIE_DETAILS[0]
@@ -34,6 +39,10 @@ export default function DetailPageContent() {
     style: "currency",
     currency,
   }).format(movie_details.revenue)
+
+  const d = dayjs.duration(movie_details.runtime, "hour")
+  const runtimeResult = `${d.hours()}hr ${d.minutes()}min ${d.seconds()}sec`
+
   return (
     <section className="flex flex-col gap-4">
       {/*Carousel section*/}
@@ -135,8 +144,81 @@ export default function DetailPageContent() {
           <div>
             <h1>Runtime</h1>
             <p className="text-xs text-muted-foreground sm:text-sm">
-              {dayjs(movie_details.runtime).format("hh mm ss")}
+              {runtimeResult}
             </p>
+          </div>
+
+          <div>
+            <h1>Status</h1>
+            <p className="text-xs text-muted-foreground sm:text-sm">
+              {movie_details.status}
+            </p>
+          </div>
+
+          <div>
+            <h1>Votes</h1>
+            <div className="flex items-center gap-1 text-xs font-semibold">
+              <Star className="size-3 fill-amber-400 text-amber-400" />
+
+              <span>{movie_details?.vote_average?.toFixed(1)}</span>
+
+              <span className="text-[10px] text-amber-300/70">/ 10</span>
+              <span className="text-muted-foreground">
+                ({movie_details.vote_count})
+              </span>
+            </div>
+          </div>
+
+          <div>
+            <h1>Country/Language</h1>
+            <div className="flex items-center gap-2">
+              {movie_details.origin_country.map((country) => (
+                <p
+                  key={country}
+                  className="text-xs text-muted-foreground sm:text-sm"
+                >
+                  {country}
+                </p>
+              ))}
+
+              <p className="text-xs text-muted-foreground sm:text-sm">
+                "{movie_details.original_language}"
+              </p>
+            </div>
+          </div>
+
+          <div>
+            <h1>Homepage</h1>
+            <Link
+              className="text-xs text-muted-foreground underline decoration-chart-2 sm:text-sm"
+              href={movie_details.homepage}
+            >
+              {movie_details.homepage}
+            </Link>
+          </div>
+
+          <div>
+            <h1>Production Companies</h1>
+            <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+              {movie_details.production_companies.map((company) => (
+                <div key={company.id} className="flex items-center gap-2">
+                  <div>
+                    <Avatar size="sm">
+                      <AvatarImage src={company.logo_path} />
+                      <AvatarFallback>
+                        {getInitials(company.name)}
+                      </AvatarFallback>
+                    </Avatar>
+                  </div>
+                  <div>
+                    <h2 className="text-sm">{company.name}</h2>
+                    <p className="text-xs text-muted-foreground">
+                      {company.origin_country}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
