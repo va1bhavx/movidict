@@ -12,7 +12,7 @@ export default function DetailPage({ id }: { id: string | number }) {
       {/*<div>This is coming from detail page: {id}</div>*/}
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-12">
-        <div className="col-span-12 border-b border-border pb-4 sm:col-span-7">
+        <div className="col-span-12 pb-4 sm:col-span-7">
           <DetailPageContent />
         </div>
         <div className="col-span-12 flex flex-col gap-8 sm:col-span-5">
