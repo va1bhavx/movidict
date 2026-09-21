@@ -6,6 +6,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
+import Link from "next/link"
 
 export default function DetailPageHeader() {
   return (
@@ -13,17 +14,17 @@ export default function DetailPageHeader() {
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
-            <BreadcrumbLink render={<a href="/" />}>Home</BreadcrumbLink>
+            <BreadcrumbLink render={<Link href="/" />}>Home</BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbLink render={<a href="/components" />}>
-              Components
+            <BreadcrumbLink render={<Link href="/movies" />}>
+              Movies
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbPage>Breadcrumb</BreadcrumbPage>
+            <BreadcrumbPage>Quantum Horizon</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>

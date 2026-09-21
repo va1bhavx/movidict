@@ -26,6 +26,9 @@ importers:
       cn:
         specifier: ^0.3.0
         version: 0.3.0
+      country-to-currency:
+        specifier: ^3.0.1
+        version: 3.0.1
       dayjs:
         specifier: ^1.11.23
         version: 1.11.23
@@ -1525,6 +1528,9 @@ packages:
     peerDependenciesMeta:
       typescript:
         optional: true
+
+  country-to-currency@3.0.1:
+    resolution: {integrity: sha512-FAo2ga8296d0Ra6vj9TB4Kax36AmqrGEc0aoLflCx5ijMtifNwA8lCqQsFfTLP2lRVKHWh/DedSpqI6v9VHyjw==}
 
   cross-spawn@7.0.6:
     resolution: {integrity: sha512-uV2QOWP2nWzsy2aMp8aRibhi9dlzF5Hgh5SHaB9OiTGEyDTiJJyx0uy51QXdyWbtAHNua4XJzUKca3OzKUd3vA==}
@@ -5049,6 +5055,8 @@ snapshots:
       parse-json: 5.2.0
     optionalDependencies:
       typescript: 5.9.3
+
+  country-to-currency@3.0.1: {}
 
   cross-spawn@7.0.6:
     dependencies:

@@ -15,9 +15,25 @@ import { MOVIE_DETAILS } from "@/lib/data/mock-movie-data"
 import dayjs from "dayjs"
 import Autoplay from "embla-carousel-autoplay"
 import { Bookmark, Share2, Star, TvMinimalPlayIcon } from "lucide-react"
+import countryToCurrency from "country-to-currency"
 
 export default function DetailPageContent() {
   const movie_details = MOVIE_DETAILS[0]
+  const country = movie_details.origin_country[0]
+  const currency =
+    (country as keyof typeof countryToCurrency) in countryToCurrency
+      ? countryToCurrency[country as keyof typeof countryToCurrency]
+      : "USD"
+
+  const budget = new Intl.NumberFormat(country, {
+    style: "currency",
+    currency,
+  }).format(movie_details.budget)
+
+  const revenue = new Intl.NumberFormat(country, {
+    style: "currency",
+    currency,
+  }).format(movie_details.revenue)
   return (
     <section className="flex flex-col gap-4">
       {/*Carousel section*/}
@@ -26,7 +42,7 @@ export default function DetailPageContent() {
           className="w-full"
           plugins={[
             Autoplay({
-              delay: 1500,
+              delay: 2000,
             }),
           ]}
         >
@@ -78,7 +94,7 @@ export default function DetailPageContent() {
             </div>
             <div>
               <span className="text-xs font-semibold text-muted-foreground sm:text-sm">
-                {dayjs(movie_details.release_date).format("DD/MM/YYYY")}
+                {dayjs(movie_details.release_date).format("MMMM DD, YYYY")}
               </span>
             </div>
           </div>
@@ -105,8 +121,24 @@ export default function DetailPageContent() {
 
       {/*credits*/}
 
-      <div>
+      <div className="flex flex-col gap-4">
         <h1 className="text-2xl font-semibold sm:text-xl">Credits</h1>
+
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <div>
+            <h1>Budget/Revenue</h1>
+            <p className="text-xs text-muted-foreground sm:text-sm">
+              {budget}/{revenue}
+            </p>
+          </div>
+
+          <div>
+            <h1>Runtime</h1>
+            <p className="text-xs text-muted-foreground sm:text-sm">
+              {dayjs(movie_details.runtime).format("hh mm ss")}
+            </p>
+          </div>
+        </div>
       </div>
     </section>
   )
