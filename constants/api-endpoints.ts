@@ -5,7 +5,8 @@ export const API_ENDPOINTS = {
     upcoming: "/movie/upcoming",
     topRated: "/movie/top_rated",
     nowPlaying: (page: number) => `/movie/now_playing?page=${page}`,
-    details: (id: number | string) => `/movie/${id}`,
+    details: (id: number) => `/movie/${id}`,
+    images: (id: number) => `/movie/${id}/images`,
   },
 
   series: {

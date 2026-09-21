@@ -66,6 +66,24 @@ export interface MovieDetails {
   vote_count: number
 }
 
+export interface MovieImagesValues {
+  aspect_ratio: number
+  height: number
+  iso_3166_1: null | string
+  iso_639_1: null | string
+  file_path: string
+  vote_average: number
+  vote_count: number
+  width: number
+}
+
+export interface MovieImages {
+  backdrops: MovieImagesValues[]
+  id: number
+  logos: MovieImagesValues[]
+  posters: MovieImagesValues[]
+}
+
 interface MovieCastList {
   adult: boolean
   gender: number

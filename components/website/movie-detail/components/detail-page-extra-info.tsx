@@ -6,15 +6,16 @@ import Link from "next/link"
 import countryToCurrency from "country-to-currency"
 import dayjs from "dayjs"
 import duration from "dayjs/plugin/duration"
+import { TMDB_IMAGE_URL } from "@/constants/general"
 
 dayjs.extend(duration)
 
 export default function DetailPageExtraInfo({
   movie_details,
 }: {
-  movie_details: MovieDetails
+  movie_details: MovieDetails | undefined
 }) {
-  const country = movie_details.origin_country[0]
+  const country = movie_details?.origin_country[0]
   const currency =
     (country as keyof typeof countryToCurrency) in countryToCurrency
       ? countryToCurrency[country as keyof typeof countryToCurrency]
@@ -25,7 +26,7 @@ export default function DetailPageExtraInfo({
     currency,
     notation: "compact",
     maximumFractionDigits: 1,
-  }).format(movie_details.budget)
+  }).format(movie_details?.budget ?? 0)
 
   const revenue = new Intl.NumberFormat(country, {
     style: "currency",
@@ -33,9 +34,9 @@ export default function DetailPageExtraInfo({
 
     notation: "compact",
     maximumFractionDigits: 1,
-  }).format(movie_details.revenue)
+  }).format(movie_details?.revenue ?? 0)
 
-  const d = dayjs.duration(movie_details.runtime, "hour")
+  const d = dayjs.duration(movie_details?.runtime ?? 0, "hour")
   const runtimeResult = `${d.hours()}hr ${d.minutes()}min ${d.seconds()}sec`
 
   return (
@@ -60,7 +61,7 @@ export default function DetailPageExtraInfo({
         <div>
           <h1>Status</h1>
           <p className="text-xs text-muted-foreground sm:text-sm">
-            {movie_details.status}
+            {movie_details?.status}
           </p>
         </div>
 
@@ -73,7 +74,7 @@ export default function DetailPageExtraInfo({
 
             <span className="text-[10px] text-amber-300/70">/ 10</span>
             <span className="text-muted-foreground">
-              ({movie_details.vote_count})
+              ({movie_details?.vote_count})
             </span>
           </div>
         </div>
@@ -81,7 +82,7 @@ export default function DetailPageExtraInfo({
         <div>
           <h1>Country/Language</h1>
           <div className="flex items-center gap-2">
-            {movie_details.origin_country.map((country) => (
+            {movie_details?.origin_country?.map((country) => (
               <p
                 key={country}
                 className="text-xs text-muted-foreground sm:text-sm"
@@ -91,7 +92,7 @@ export default function DetailPageExtraInfo({
             ))}
 
             <p className="text-xs text-muted-foreground sm:text-sm">
-              "{movie_details.original_language}"
+              "{movie_details?.original_language}"
             </p>
           </div>
         </div>
@@ -100,20 +101,23 @@ export default function DetailPageExtraInfo({
           <h1>Homepage</h1>
           <Link
             className="text-xs text-muted-foreground underline decoration-chart-2 sm:text-sm"
-            href={movie_details.homepage}
+            href={movie_details?.homepage ?? ""}
           >
-            {movie_details.homepage}
+            {movie_details?.homepage}
           </Link>
         </div>
 
         <div>
           <h1>Production Companies</h1>
-          <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-            {movie_details.production_companies.map((company) => (
+          <div className="mt-3 grid grid-cols-1 gap-4">
+            {movie_details?.production_companies?.map((company) => (
               <div key={company.id} className="flex items-center gap-2">
                 <div>
                   <Avatar size="sm">
-                    <AvatarImage src={company.logo_path} />
+                    <AvatarImage
+                      src={`${TMDB_IMAGE_URL}${company?.logo_path}`}
+                      alt={`Production Company ${company.name}`}
+                    />
                     <AvatarFallback>{getInitials(company.name)}</AvatarFallback>
                   </Avatar>
                 </div>

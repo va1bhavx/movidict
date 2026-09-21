@@ -1,34 +1,26 @@
 import {
   Breadcrumb,
   BreadcrumbItem,
-  BreadcrumbLink,
   BreadcrumbList,
-  BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
-import Link from "next/link"
+import { Skeleton } from "@/components/ui/skeleton"
 
-export default function DetailPageHeader({
-  title,
-}: {
-  title: string | undefined
-}) {
+export default function DetailPageHeaderSkeleton() {
   return (
     <div>
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
-            <BreadcrumbLink render={<Link href="/" />}>Home</BreadcrumbLink>
+            <Skeleton className="h-4 w-12 rounded" />
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbLink render={<Link href="/movies" />}>
-              Movies
-            </BreadcrumbLink>
+            <Skeleton className="h-4 w-14 rounded" />
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbPage>{title}</BreadcrumbPage>
+            <Skeleton className="h-4 w-32 rounded sm:w-44" />
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>

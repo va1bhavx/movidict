@@ -1,0 +1,6 @@
+export { default as DetailPageSkeleton } from "./detail-page-skeleton"
+export { default as DetailPageHeaderSkeleton } from "./detail-page-header-skeleton"
+export { default as DetailPageCarouselSkeleton } from "./detail-page-carousel-skeleton"
+export { default as DetailPageAboutSkeleton } from "./detail-page-about-skeleton"
+export { default as DetailPageExtraInfoSkeleton } from "./detail-page-extra-info-skeleton"
+export { default as DetailPageContentSkeleton } from "./detail-page-content-skeleton"

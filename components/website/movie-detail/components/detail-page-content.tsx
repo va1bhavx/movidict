@@ -15,47 +15,58 @@ import duration from "dayjs/plugin/duration"
 import Autoplay from "embla-carousel-autoplay"
 
 import DetailPageAboutMovie from "./detail-page-about-movie"
+import { MovieDetails, MovieImages } from "@/features/movies/movies.types"
+import Image from "next/image"
+import { TMDB_IMAGE_URL } from "@/constants/general"
+import { DetailPageCarouselSkeleton } from "./skeletons"
 dayjs.extend(duration)
 
-export default function DetailPageContent() {
-  const movie_details = MOVIE_DETAILS[0]
-
+export default function DetailPageContent({
+  movie_details,
+  movie_images,
+}: {
+  movie_details: MovieDetails | undefined
+  movie_images: MovieImages | undefined
+}) {
   return (
     <section className="flex flex-col gap-7">
-      {/*Carousel section*/}
       <div>
-        <Carousel
-          className=""
-          plugins={[
-            Autoplay({
-              delay: 2000,
-            }),
-          ]}
-        >
-          <CarouselContent>
-            {Array.from({ length: 5 }).map((_, index) => (
-              <CarouselItem key={index}>
-                <div className="p-1">
-                  <Card>
-                    <CardContent className="flex aspect-video items-center justify-center p-6">
-                      <span className="text-4xl font-semibold">
-                        {index + 1}
-                      </span>
-                    </CardContent>
-                  </Card>
-                </div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-          <CarouselPrevious className="-left-4 sm:-left-6" />
-          <CarouselNext className="-right-4 sm:-right-6" />
-        </Carousel>
+        {movie_images?.backdrops && movie_images.backdrops.length > 0 ? (
+          <Carousel
+            className=""
+            opts={{
+              loop: true,
+            }}
+            plugins={[
+              Autoplay({
+                delay: 4000,
+              }),
+            ]}
+          >
+            <CarouselContent>
+              {movie_images.backdrops.map((backdrop, index) => (
+                <CarouselItem key={backdrop.file_path}>
+                  <div className="relative aspect-video w-full overflow-hidden rounded-xl bg-neutral-900">
+                    <Image
+                      src={`${TMDB_IMAGE_URL}${backdrop.file_path}`}
+                      alt={`Movie backdrop ${index + 1}`}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 80vw"
+                      className="object-cover"
+                    />
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="-left-4 sm:-left-6" />
+            <CarouselNext className="-right-4 sm:-right-6" />
+          </Carousel>
+        ) : (
+          <DetailPageCarouselSkeleton />
+        )}
       </div>
 
-      {/*movie content*/}
       <DetailPageAboutMovie movie_details={movie_details} />
-      {/*Extra Info*/}
-      {/*<DetailPageExtraInfo movie_details={movie_details} />*/}
     </section>
   )
 }

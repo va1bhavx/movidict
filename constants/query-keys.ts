@@ -7,6 +7,7 @@ export const QUERY_KEYS = {
     topRated: ["movies", "topRated"],
 
     details: (id: number) => ["movies", "details", id],
+    images: (id: number) => ["movies", "images", id],
   },
   genres: {
     movies: ["genres", "movies"],

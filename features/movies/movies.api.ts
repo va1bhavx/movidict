@@ -1,6 +1,6 @@
 import { api } from "@/lib/axios"
 import { ApiSuccessResponse } from "@/types/general.types"
-import { MovieListResponse } from "./movies.types"
+import { MovieDetails, MovieImages, MovieListResponse } from "./movies.types"
 
 export const getUpcomingMovies = async () => {
   const { data } = await api.get("/movies/upcoming")
@@ -26,4 +26,20 @@ export const getPopularMovies = async () => {
   const { data } = await api.get("/movies/popular")
 
   return data?.result?.results
+}
+
+export const getMovieDetails = async ({ id }: { id: number }) => {
+  const { data } = await api.get<ApiSuccessResponse<MovieDetails>>(
+    `/movies/movie_details?id=${id}`
+  )
+
+  return data?.result
+}
+
+export const getMovieImages = async ({ id }: { id: number }) => {
+  const { data } = await api.get<ApiSuccessResponse<MovieImages>>(
+    `/movies/movie_images?id=${id}`
+  )
+
+  return data?.result
 }
