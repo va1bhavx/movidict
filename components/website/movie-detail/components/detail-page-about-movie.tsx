@@ -10,7 +10,7 @@ export default function DetailPageAboutMovie({
   movie_details: MovieDetails
 }) {
   return (
-    <div className="flex flex-col gap-4 border-b border-border pb-4">
+    <div className="flex flex-col gap-4 border-b border-border pb-4 sm:border-none">
       <div className="flex flex-wrap gap-2">
         {movie_details.genres.map((genre) => (
           <Badge key={genre.id} variant={"secondary"}>
@@ -47,15 +47,15 @@ export default function DetailPageAboutMovie({
         </p>
       </div>
       <div className="flex flex-wrap gap-4">
-        <Button size={"lg"}>
+        <Button>
           <TvMinimalPlayIcon />
           Watch trailer
         </Button>
-        <Button size={"lg"} variant={"outline"}>
+        <Button variant={"outline"}>
           <Bookmark />
           Sign in to save
         </Button>
-        <Button size={"icon-lg"} variant={"outline"}>
+        <Button variant={"outline"}>
           <Share2 />
         </Button>
       </div>

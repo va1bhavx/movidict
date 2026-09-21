@@ -25,7 +25,7 @@ export default function DetailPageContent() {
       {/*Carousel section*/}
       <div>
         <Carousel
-          className="w-full"
+          className=""
           plugins={[
             Autoplay({
               delay: 2000,
