@@ -43,3 +43,15 @@ export const getMovieImages = async ({ id }: { id: number }) => {
 
   return data?.result
 }
+
+export const getMovieCredits = async ({ id }: { id: number }) => {
+  const { data } = await api.get(`/movies/cast?id=${id}`)
+
+  return data?.result?.cast
+}
+
+export const getMovieVideos = async ({ id }: { id: number }) => {
+  const { data } = await api.get(`/movies/trailers?id=${id}`)
+
+  return data?.result?.results
+}

@@ -99,6 +99,46 @@ interface MovieCastList {
   order: number
 }
 
+export interface RecentlyViewedMovies {
+  id: number
+  title: string
+  vote_count: number
+  vote_average: number
+  backdrop_path: string
+  poster_path: string
+  released_date: string
+  type: "movie" | "tv"
+  viewedAt: number
+}
+
+export interface MovieCast {
+  adult: boolean
+  gender: string
+  id: number
+  known_for_department: string
+  name: string
+  original_name: string
+  popularity: number
+  profile_path: string
+  cast_id: number
+  character: string
+  credit_id: string
+  order: number
+}
+
+export interface MovieVideo {
+  iso_639_1: string
+  iso_3166_1: string
+  name: string
+  key: string
+  site: string
+  size: number
+  type: string
+  official: boolean
+  published_at: string
+  id: string
+}
+
 export interface MovieListResponse extends PaginatedResponse<Movie> {
   dates?: {
     maximum: string

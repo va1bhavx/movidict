@@ -1,11 +1,9 @@
 "use client"
 
 import CardsSkeleton from "@/components/component/cards-skeletons"
-import MovieCard from "@/components/component/movie-card"
 import SeriesCard from "@/components/component/series-card"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { COMPARE_LIMIT } from "@/constants/general"
 import {
   useGetAiringTodaySeries,
   useGetOnTheAirSeries,
@@ -13,10 +11,10 @@ import {
   useGetTopRatedSeries,
 } from "@/features/series/series.hooks"
 import type { Series } from "@/features/series/series.types"
+import compare from "@/utils/handle-compare"
 import { ChevronRight } from "lucide-react"
 import Link from "next/link"
 import { useState } from "react"
-import { toast } from "sonner"
 
 const SERIES_EXPLORER_TABS = [
   {
@@ -153,29 +151,9 @@ function PopularTab({
 }
 
 export default function Series() {
-  const [activeTab, setActiveTab] = useState("airing_today")
-  const [compareIds, setCompareIds] = useState<number[]>([])
+  const [activeTab, setActiveTab] = useState<string>("airing_today")
+  const { compareIds, handleCompare } = compare()
 
-  const handleCompare = (movieId: number) => {
-    if (compareIds.includes(movieId)) {
-      setCompareIds((ids) => ids.filter((id) => id !== movieId))
-      toast.success("Removed from compare")
-      return
-    }
-
-    if (compareIds.length >= COMPARE_LIMIT) {
-      return toast.error(`Can't add more than ${COMPARE_LIMIT} to compare`)
-    }
-
-    setCompareIds((ids) => [...ids, movieId])
-    const remaining = COMPARE_LIMIT - (compareIds.length + 1)
-    toast.success("Added to compare", {
-      description:
-        remaining > 0
-          ? `You can add ${remaining} more`
-          : "Compare list is full.",
-    })
-  }
   return (
     <section className="w-full">
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">

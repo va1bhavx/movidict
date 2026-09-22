@@ -8,6 +8,8 @@ export const QUERY_KEYS = {
 
     details: (id: number) => ["movies", "details", id],
     images: (id: number) => ["movies", "images", id],
+    credits: (id: number) => ["movies", "credits", id],
+    videos: (id: number) => ["movies", "videos", id],
   },
   genres: {
     movies: ["genres", "movies"],

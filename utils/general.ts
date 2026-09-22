@@ -1,3 +1,4 @@
+import { getLocalStorageItem, setLocalStorageItem } from "@/lib/localstorage"
 import { Genres } from "@/types/general.types"
 
 export function getGenres(
@@ -18,4 +19,18 @@ export function getInitials(name: string) {
     .join("")
     .toUpperCase()
     .slice(0, 2)
+}
+
+export function addToLocalStorage(key: string, movie: Record<string, unknown>) {
+  const existing = getLocalStorageItem(key) ?? []
+
+  const updated = [
+    movie,
+    ...existing.filter(
+      (item: Record<string, unknown>) =>
+        !(item.id === movie.id && item.type === movie.type)
+    ),
+  ].slice(0, 10)
+
+  setLocalStorageItem(key, updated)
 }

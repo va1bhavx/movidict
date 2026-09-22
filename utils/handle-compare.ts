@@ -3,7 +3,7 @@ import { toast } from "sonner"
 
 const COMPARE_LIMIT = 4
 
-export default function handleCompare(movieId: number) {
+export default function compare() {
   const [compareIds, setCompareIds] = useState<number[]>([])
 
   const handleCompare = (movieId: number) => {

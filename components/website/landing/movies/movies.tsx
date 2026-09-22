@@ -3,7 +3,6 @@
 import MovieCard from "@/components/component/movie-card"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { COMPARE_LIMIT } from "@/constants/general"
 import {
   useGetNowPlayingMovies,
   useGetPopularMovies,
@@ -14,8 +13,8 @@ import { Movie } from "@/features/movies/movies.types"
 import { ChevronRight } from "lucide-react"
 import Link from "next/link"
 import { useState } from "react"
-import { toast } from "sonner"
 import CardsSkeleton from "../../../component/cards-skeletons"
+import compare from "@/utils/handle-compare"
 
 const MOVIE_EXPLORER_TABS = [
   {
@@ -171,30 +170,9 @@ function UpcomingMoviesTab({
 }
 
 export default function Movies() {
-  const [activeTab, setActiveTab] = useState("now_playing")
+  const [activeTab, setActiveTab] = useState<string>("now_playing")
 
-  const [compareIds, setCompareIds] = useState<number[]>([])
-
-  const handleCompare = (movieId: number) => {
-    if (compareIds.includes(movieId)) {
-      setCompareIds((ids) => ids.filter((id) => id !== movieId))
-      toast.success("Removed from compare")
-      return
-    }
-
-    if (compareIds.length >= COMPARE_LIMIT) {
-      return toast.error(`Can't add more than ${COMPARE_LIMIT} to compare`)
-    }
-
-    setCompareIds((ids) => [...ids, movieId])
-    const remaining = COMPARE_LIMIT - (compareIds.length + 1)
-    toast.success("Added to compare", {
-      description:
-        remaining > 0
-          ? `You can add ${remaining} more`
-          : "Compare list is full.",
-    })
-  }
+  const { compareIds, handleCompare } = compare()
 
   return (
     <section className="w-full">

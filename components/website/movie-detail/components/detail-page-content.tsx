@@ -1,7 +1,5 @@
 "use client"
 
-import { Card, CardContent } from "@/components/ui/card"
-
 import {
   Carousel,
   CarouselContent,
@@ -9,12 +7,10 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
-import { MOVIE_DETAILS } from "@/lib/data/mock-movie-data"
 import dayjs from "dayjs"
 import duration from "dayjs/plugin/duration"
 import Autoplay from "embla-carousel-autoplay"
 
-import DetailPageAboutMovie from "./detail-page-about-movie"
 import { MovieDetails, MovieImages } from "@/features/movies/movies.types"
 import Image from "next/image"
 import { TMDB_IMAGE_URL } from "@/constants/general"
@@ -30,10 +26,10 @@ export default function DetailPageContent({
 }) {
   return (
     <section className="flex flex-col gap-7">
-      <div>
+      <div className="">
         {movie_images?.backdrops && movie_images.backdrops.length > 0 ? (
           <Carousel
-            className=""
+            className="max-w-xl"
             opts={{
               loop: true,
             }}
@@ -65,8 +61,6 @@ export default function DetailPageContent({
           <DetailPageCarouselSkeleton />
         )}
       </div>
-
-      <DetailPageAboutMovie movie_details={movie_details} />
     </section>
   )
 }

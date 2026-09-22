@@ -7,6 +7,8 @@ export const API_ENDPOINTS = {
     nowPlaying: (page: number) => `/movie/now_playing?page=${page}`,
     details: (id: number) => `/movie/${id}`,
     images: (id: number) => `/movie/${id}/images`,
+    cast: (id: number) => `/movie/${id}/credits`,
+    videos: (id: number) => `/movie/${id}/videos`,
   },
 
   series: {

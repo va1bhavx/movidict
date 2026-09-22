@@ -1,8 +1,10 @@
 import { QUERY_KEYS } from "@/constants/query-keys"
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query"
 import {
+  getMovieCredits,
   getMovieDetails,
   getMovieImages,
+  getMovieVideos,
   getNowPlayingMovies,
   getPopularMovies,
   getTopRatedMovies,
@@ -54,5 +56,19 @@ export const useGetMovieImages = ({ id }: { id: number }) => {
   return useQuery({
     queryKey: QUERY_KEYS.movies.images(id),
     queryFn: () => getMovieImages({ id }),
+  })
+}
+
+export const useGetMovieCredits = ({ id }: { id: number }) => {
+  return useQuery({
+    queryKey: QUERY_KEYS.movies.credits(id),
+    queryFn: () => getMovieCredits({ id }),
+  })
+}
+
+export const useGetMovieVideos = ({ id }: { id: number }) => {
+  return useQuery({
+    queryKey: QUERY_KEYS.movies.videos(id),
+    queryFn: () => getMovieVideos({ id }),
   })
 }
