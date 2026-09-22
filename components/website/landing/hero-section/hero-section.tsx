@@ -65,7 +65,7 @@ export default function HeroSection() {
           Trending Spotlight
         </p>
 
-        <div className="-mx-1 flex touch-pan-x snap-x scrollbar-none items-center gap-3 overflow-x-auto px-1 py-2">
+        <div className="flex touch-pan-x snap-x scrollbar-none items-center gap-3 overflow-x-auto px-1 py-2">
           {movies?.map((movie: Movie) => {
             const isSelected = movie.id === activeMovie?.id
             return (

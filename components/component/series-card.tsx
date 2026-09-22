@@ -94,7 +94,7 @@ export default function SeriesCard({
           <Tooltip>
             <TooltipTrigger
               render={
-                <p className="max-w-30 truncate text-sm font-medium text-muted-foreground">
+                <p className="max-w-38 truncate text-sm font-medium text-muted-foreground">
                   {series.original_name}
                 </p>
               }

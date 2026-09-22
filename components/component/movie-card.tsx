@@ -41,7 +41,7 @@ export default function MovieCard({
               className="object-cover transition-transform duration-300"
             />
           ) : (
-            <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-gray-800 to-gray-900 p-3">
+            <div className="flex h-full w-full items-center justify-center bg-linear-to-br from-gray-800 to-gray-900 p-3">
               <span className="line-clamp-3 text-center text-sm font-medium text-gray-400">
                 {movie.original_title}
               </span>
@@ -94,7 +94,7 @@ export default function MovieCard({
           <Tooltip>
             <TooltipTrigger
               render={
-                <p className="max-w-30 truncate text-sm font-medium text-muted-foreground">
+                <p className="max-w-34 truncate text-sm font-medium text-muted-foreground">
                   {movie.title}
                 </p>
               }

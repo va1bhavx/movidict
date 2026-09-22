@@ -209,7 +209,7 @@ export default function Series() {
 
         <TabsContent
           value={activeTab}
-          className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6"
+          className="mx-1 flex touch-pan-x snap-x scrollbar-none items-center gap-3 overflow-x-auto px-1 py-2"
         >
           {activeTab === "airing_today" && (
             <AiringTodayTab
