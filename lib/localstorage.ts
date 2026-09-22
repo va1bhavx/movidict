@@ -22,4 +22,9 @@ export function setLocalStorageItem(key: string, value: unknown) {
 export function deleteOneLocalStorageItem(key: string) {
   // const
 }
-export function removeLocalStorageItem() {}
+export function removeLocalStorageItem(key: string) {
+  if (typeof window === "undefined") {
+    return
+  }
+  window.localStorage.removeItem(key)
+}

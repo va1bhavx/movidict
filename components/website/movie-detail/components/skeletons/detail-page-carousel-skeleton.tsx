@@ -3,7 +3,7 @@ import { ChevronLeft, ChevronRight, Film } from "lucide-react"
 
 export default function DetailPageCarouselSkeleton() {
   return (
-    <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-border/30 bg-muted/40">
+    <div className="relative aspect-video w-full max-w-xl overflow-hidden rounded-xl border border-border/30 bg-muted/40">
       {/* Main backdrop shimmer */}
       <Skeleton className="h-full w-full rounded-xl bg-muted/60" />
 
