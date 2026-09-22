@@ -94,7 +94,7 @@ export default function MovieCard({
           <Tooltip>
             <TooltipTrigger
               render={
-                <p className="max-w-34 truncate text-sm font-medium text-muted-foreground">
+                <p className="max-w-34 truncate text-xs font-medium text-muted-foreground sm:text-sm">
                   {movie.title}
                 </p>
               }
@@ -102,7 +102,7 @@ export default function MovieCard({
             <TooltipContent>{movie.title}</TooltipContent>
           </Tooltip>
 
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between text-xs sm:text-sm">
             <span> {dayjs(movie?.release_date).format("DD/MM/YYYY")}</span>
             <span className="flex items-center gap-2">
               <Star className="size-3 fill-amber-400" />

@@ -94,7 +94,7 @@ export default function SeriesCard({
           <Tooltip>
             <TooltipTrigger
               render={
-                <p className="max-w-38 truncate text-sm font-medium text-muted-foreground">
+                <p className="max-w-38 truncate text-xs font-medium text-muted-foreground sm:text-sm">
                   {series.original_name}
                 </p>
               }
@@ -102,7 +102,7 @@ export default function SeriesCard({
             <TooltipContent>{series.original_name}</TooltipContent>
           </Tooltip>
 
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between text-xs sm:text-sm">
             <span> {dayjs(series?.first_air_date).format("DD/MM/YYYY")}</span>
             <span className="flex items-center gap-2">
               <Star className="size-3 fill-amber-400" />
