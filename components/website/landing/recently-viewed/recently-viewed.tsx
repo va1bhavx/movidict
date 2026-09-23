@@ -142,7 +142,6 @@ export default function RecentlyViewed({
     setItems([])
   }
 
-  // If not mounted yet and no movies prop, or if items list is empty, don't show the section
   if (mounted && items.length === 0) {
     return null
   }
