@@ -1,25 +1,33 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import Modal from "@/components/component/modal"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { MovieDetails, MovieVideo } from "@/features/movies/movies.types"
 import dayjs from "dayjs"
-import { Bookmark, Share2, Star, TvMinimalPlayIcon, X } from "lucide-react"
+import {
+  Bookmark,
+  ChevronRight,
+  Share2,
+  Star,
+  TvMinimalPlayIcon,
+  X,
+} from "lucide-react"
 import LiteYouTubeEmbed from "react-lite-youtube-embed"
 import "react-lite-youtube-embed/dist/LiteYouTubeEmbed.css"
 import Image from "next/image"
+import TrailerModalSkeleton from "./skeletons/trailer-modal-skeleton"
 
 export default function DetailPageAboutMovie({
   movie_details,
   movie_videos,
+  isVideoLoading,
 }: {
   movie_details: MovieDetails | undefined
   movie_videos: MovieVideo[] | undefined
+  isVideoLoading: boolean
 }) {
-  console.log(movie_videos, "movie_videos")
-
   const typeColors: Record<string, string> = {
     Trailer: "bg-red-600",
     Teaser: "bg-orange-600",
@@ -43,12 +51,6 @@ export default function DetailPageAboutMovie({
         (a, b) => (videoPriority[a.type] ?? 99) - (videoPriority[b.type] ?? 99)
       ) ?? []
 
-  const officialTrailer =
-    youtubeVideos.find((video) => video.type === "Trailer" && video.official) ??
-    youtubeVideos.find((video) => video.type === "Trailer") ??
-    youtubeVideos[0]
-
-  const [featured, ...rest] = youtubeVideos
   const [selectedVideo, setSelectedVideo] = useState<MovieVideo | undefined>()
   useEffect(() => {
     if (youtubeVideos.length > 0) {
@@ -105,144 +107,157 @@ export default function DetailPageAboutMovie({
           dialogTitle="More to watch"
           dialogDescription="Trailers, teasers, clips, and behind-the-scenes videos."
         >
-          <div className="no-scrollbar max-h-[75vh] space-y-6 overflow-y-auto pr-1">
-            {selectedVideo && (
-              <section className="space-y-3">
-                <div className="overflow-hidden rounded-xl border border-white/10 bg-black shadow-lg">
-                  <LiteYouTubeEmbed
-                    key={selectedVideo.id}
-                    id={selectedVideo.key}
-                    title={selectedVideo.name}
-                  />
-                </div>
-
-                <div className="space-y-1">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <h3 className="text-base leading-tight font-semibold">
-                      {selectedVideo.name}
-                    </h3>
-
-                    {selectedVideo.official && (
-                      <Badge variant="secondary" className="text-[10px]">
-                        Official
-                      </Badge>
-                    )}
+          {isVideoLoading ? (
+            <TrailerModalSkeleton />
+          ) : (
+            <div className="no-scrollbar max-h-[75vh] space-y-6 overflow-y-auto pr-1">
+              {selectedVideo && (
+                <section className="space-y-3">
+                  <div className="overflow-hidden rounded-xl border border-white/10 bg-black shadow-lg">
+                    <LiteYouTubeEmbed
+                      key={selectedVideo.id}
+                      id={selectedVideo.key}
+                      title={selectedVideo.name}
+                    />
                   </div>
 
-                  <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
-                    <span>{selectedVideo.type}</span>
+                  <div className="space-y-1">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <h3 className="text-base leading-tight font-semibold">
+                        {selectedVideo.name}
+                      </h3>
 
-                    <span>•</span>
+                      {selectedVideo.official && (
+                        <Badge variant="secondary" className="text-[10px]">
+                          Official
+                        </Badge>
+                      )}
+                    </div>
 
-                    <span>{selectedVideo.size}p</span>
+                    <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+                      <span>{selectedVideo.type}</span>
 
-                    <span>•</span>
+                      <span>•</span>
 
-                    <span>
-                      {dayjs(selectedVideo.published_at).format("MMM D, YYYY")}
-                    </span>
+                      <span>{selectedVideo.size}p</span>
+
+                      <span>•</span>
+
+                      <span>
+                        {dayjs(selectedVideo.published_at).format(
+                          "MMM D, YYYY"
+                        )}
+                      </span>
+                    </div>
                   </div>
-                </div>
-              </section>
-            )}
+                </section>
+              )}
 
-            {youtubeVideos.length > 0 && (
-              <section className="space-y-3">
-                <div>
-                  <h3 className="text-sm font-semibold">More videos</h3>
+              {youtubeVideos.length > 0 && (
+                <section className="space-y-3">
+                  <div>
+                    <h3 className="text-sm font-semibold">More videos</h3>
 
-                  <p className="mt-0.5 text-xs text-muted-foreground">
-                    Select a trailer, teaser, or clip to watch.
-                  </p>
-                </div>
+                    <p className="mt-0.5 text-xs text-muted-foreground">
+                      Select a trailer, teaser, or clip to watch.
+                    </p>
+                  </div>
 
-                <div className="no-scrollbar flex gap-4 overflow-x-auto pb-3">
-                  {youtubeVideos.map((video) => {
-                    const isSelected = selectedVideo?.id === video.id
+                  <div className="no-scrollbar flex gap-4 overflow-x-auto pb-3">
+                    {youtubeVideos.map((video) => {
+                      const isSelected = selectedVideo?.id === video.id
 
-                    return (
-                      <button
-                        key={video.id}
-                        type="button"
-                        onClick={() => setSelectedVideo(video)}
-                        className={`group w-44 shrink-0 px-1 py-1 text-left transition-opacity ${
-                          isSelected
-                            ? "opacity-100"
-                            : "opacity-70 hover:opacity-100"
-                        }`}
-                      >
-                        <div
-                          className={`rounded-lg transition-all ${
-                            isSelected
-                              ? "ring-2 ring-primary ring-offset-2 ring-offset-background"
-                              : "ring-1 ring-white/10"
-                          }`}
-                        >
-                          <div className="relative aspect-video overflow-hidden rounded-lg bg-neutral-900">
-                            <Image
-                              src={`https://img.youtube.com/vi/${video.key}/hqdefault.jpg`}
-                              alt={video.name}
-                              fill
-                              className="h-full w-full object-cover transition-transform duration-300"
-                            />
-
+                      return (
+                        <React.Fragment key={video.id}>
+                          <button
+                            key={video.id}
+                            type="button"
+                            onClick={() => setSelectedVideo(video)}
+                            className={`group w-44 shrink-0 px-1 py-1 text-left transition-opacity ${
+                              isSelected
+                                ? "opacity-100"
+                                : "opacity-70 hover:opacity-100"
+                            }`}
+                          >
                             <div
-                              className={`absolute inset-0 transition-colors ${
+                              className={`rounded-lg transition-all ${
                                 isSelected
-                                  ? "bg-black/25"
-                                  : "bg-black/35 group-hover:bg-black/20"
+                                  ? "ring-2 ring-primary ring-offset-2 ring-offset-background"
+                                  : "ring-1 ring-white/10"
                               }`}
-                            />
+                            >
+                              <div className="relative aspect-video overflow-hidden rounded-lg bg-neutral-900">
+                                <Image
+                                  src={`https://img.youtube.com/vi/${video.key}/hqdefault.jpg`}
+                                  alt={video.name}
+                                  fill
+                                  className="h-full w-full object-cover transition-transform duration-300"
+                                />
 
-                            <div className="absolute inset-0 flex items-center justify-center">
-                              <div
-                                className={`flex size-9 items-center justify-center rounded-full text-white backdrop-blur-sm transition-transform ${
-                                  isSelected ? "bg-primary" : "bg-black/70"
-                                }`}
-                              >
-                                <TvMinimalPlayIcon className="size-4" />
+                                <div
+                                  className={`absolute inset-0 transition-colors ${
+                                    isSelected
+                                      ? "bg-black/25"
+                                      : "bg-black/35 group-hover:bg-black/20"
+                                  }`}
+                                />
+
+                                <div className="absolute inset-0 flex items-center justify-center">
+                                  <div
+                                    className={`flex size-9 items-center justify-center rounded-full text-white backdrop-blur-sm transition-transform ${
+                                      isSelected ? "bg-primary" : "bg-black/70"
+                                    }`}
+                                  >
+                                    <TvMinimalPlayIcon className="size-4" />
+                                  </div>
+                                </div>
+
+                                <div className="absolute bottom-2 left-2">
+                                  <Badge
+                                    className={`border-0 text-[10px] text-primary ${
+                                      typeColors[video.type] ?? "bg-neutral-700"
+                                    }`}
+                                  >
+                                    {video.type}
+                                  </Badge>
+                                </div>
+
+                                {video.size && (
+                                  <div className="absolute right-2 bottom-2">
+                                    <span className="rounded bg-black/70 px-1.5 py-0.5 text-[10px] text-white/90 backdrop-blur-sm">
+                                      {video.size}p
+                                    </span>
+                                  </div>
+                                )}
                               </div>
                             </div>
 
-                            <div className="absolute bottom-2 left-2">
-                              <Badge
-                                className={`border-0 text-[10px] text-primary ${
-                                  typeColors[video.type] ?? "bg-neutral-700"
-                                }`}
-                              >
+                            {/* Video information */}
+                            <div className="mt-2 space-y-0.5">
+                              <p className="line-clamp-1 text-xs font-medium text-foreground">
+                                {video.name}
+                              </p>
+
+                              <p className="text-[11px] text-muted-foreground">
+                                {video.official ? "Official" : "YouTube"}
+                                {" • "}
                                 {video.type}
-                              </Badge>
+                              </p>
                             </div>
-
-                            {video.size && (
-                              <div className="absolute right-2 bottom-2">
-                                <span className="rounded bg-black/70 px-1.5 py-0.5 text-[10px] text-white/90 backdrop-blur-sm">
-                                  {video.size}p
-                                </span>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-
-                        {/* Video information */}
-                        <div className="mt-2 space-y-0.5">
-                          <p className="line-clamp-1 text-xs font-medium text-foreground">
-                            {video.name}
-                          </p>
-
-                          <p className="text-[11px] text-muted-foreground">
-                            {video.official ? "Official" : "YouTube"}
-                            {" • "}
-                            {video.type}
-                          </p>
-                        </div>
-                      </button>
-                    )
-                  })}
-                </div>
-              </section>
-            )}
-          </div>
+                          </button>
+                        </React.Fragment>
+                      )
+                    })}
+                  </div>
+                  {youtubeVideos.length > 3 && (
+                    <p className="flex size-4 w-full items-center justify-end text-xs text-muted-foreground md:hidden">
+                      Swipe more to see <ChevronRight className="size-3" />
+                    </p>
+                  )}
+                </section>
+              )}
+            </div>
+          )}
         </Modal>
 
         <Button variant={"outline"}>

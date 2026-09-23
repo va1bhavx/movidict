@@ -27,7 +27,8 @@ export default function DetailPage({ id }: { id: string | number }) {
   const { data: movie_images } = useGetMovieImages({ id: movieId })
 
   const { data: movie_credits } = useGetMovieCredits({ id: movieId })
-  const { data: movie_videos } = useGetMovieVideos({ id: movieId })
+  const { data: movie_videos, isLoading: isMovieVideosLoading } =
+    useGetMovieVideos({ id: movieId })
 
   useEffect(() => {
     if (!movie_details) return
@@ -66,6 +67,7 @@ export default function DetailPage({ id }: { id: string | number }) {
           <DetailPageAboutMovie
             movie_videos={movie_videos}
             movie_details={movie_details}
+            isVideoLoading={isMovieVideosLoading}
           />
           <DetailPageExtraInfo movie_details={movie_details} />
           <DetailPageCast casts={movie_credits} />
